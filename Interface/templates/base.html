@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Application Web{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'CSS/new.css' %}">
+</head>
+<body>
+    <div class="overlay"></div>
+    <video autoplay muted loop id="background-video">
+        <source src="{% static 'FILE/Data Science Free Background Video.mp4' %}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <header>
+        <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo">
+        <h1 class="app-name">Nom de l'Application</h1>
+    </header>
+
+    <main>
+        {% block content %}
+        <!-- Content specific to each page will go here -->
+        {% endblock %}
+    </main>
+
+    <script src="{% static 'SCRIPT/new.js' %}"></script>
+</body>
+</html>

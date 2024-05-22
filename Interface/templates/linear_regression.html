@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Regression linéaire</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="file">Importer un fichier CSV :</label>
+    <input type="file" id="file" name="file" accept=".csv">
+    <button type="submit">Traiter</button>
+</form>
+{% if result %}
+    <h3>Résultat :</h3>
+    <p>{{ result }}</p>
+    <a href="{% url 'generate_linear_regression_pdf' %}">Télécharger le résultat au format PDF</a>
+{% endif %}    
+{% endblock %}

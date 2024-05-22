@@ -1,0 +1,12 @@
+https://www.youtube.com/watch?v=VtRLrQ3Ev-U        NN implementation
+https://www.youtube.com/watch?v=uszt88Z-0Fc	   ghraph to dataset
+https://www.youtube.com/watch?v=NUXdtN1W1FE	   Linear regression video
+https://www.youtube.com/watch?v=72GbaE0YAzg	   complexe network
+https://www.youtube.com/watch?v=aZNtHJwfIVg	   DEEPWALK explication
+https://www.youtube.com/watch?v=eUeCXMpyJK4	   node2vec implementation
+https://github.com/piskvorky/gensim		   gensim source code
+
+
+-1.64750894	0.36842105
+https://www.youtube.com/watch?v=lTKvouq306M&list=PLioyCh8JXgUADox2qCjdfXkA9JoI1NRPf&index=6      graph theorie
+https://www.youtube.com/watch?v=rzyGVScRuxU	Django tuturial

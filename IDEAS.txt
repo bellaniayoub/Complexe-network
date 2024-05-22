@@ -1,0 +1,16 @@
+ADD AUTOMATIC ALGORITHM OPTION
+comment representer un arbre de decision par un graph 	DEEPWALK IS USEFULL
+Centrality types:
+	Degree Centrality
+	Closeness Centrality
+	Betweenness Centrality
+
+
+ THE CENTRALITY IS THE FEATURES OR ADJACENCY MATRIX.
+
+ USE AN API TO VERIFY THE MAILS
+
+adding the maths of things
+
+
+

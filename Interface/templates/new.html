@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Application Web{% endblock %}
+
+{% block content %}
+    <div class="dropdown-container">
+        <select id="dropdown" onchange="navigateToPage()">
+            <option value="">Choisissez un algorithme</option>
+            <option value="/neural_network/">Réseau neurone</option>
+            <option value="/linear_regression/">Regression linéaire</option>
+            <option value="/k_nearest_neighbors">K-ppv</option>
+            <option value="/decision_tree/l">Arbre de décision</option>
+        </select>
+    </div>
+{% endblock %}
