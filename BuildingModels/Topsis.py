@@ -127,7 +127,7 @@ class Topsis():
                                       (self.worst_distance[i] + self.best_distance[i])
 
     def ranking(self, data):
-        return [i  for i in data.argsort()]
+        return [i+1  for i in data.argsort()]
 
     def rank_to_worst_similarity(self):
         # return rankdata(self.worst_similarity, method="min").astype(int)
@@ -149,11 +149,11 @@ class Topsis():
         self.step_5()
         # print("Step 5\n", self.worst_distance, self.best_distance, end="\n\n")
         self.step_6()
-        return self.rank_to_best_similarity()[-int(len(degree)*0.1):]
+        return self.rank_to_best_similarity()#[:int(len(self.rank_to_best_similarity())*0.1)]
         # print("Step 6\n", self.worst_similarity,
         #       self.best_similarity, end="\n\n")
 if __name__ == "__main__":
-    df = pd.read_csv("Dolphine_csv.csv")
+    df = pd.read_csv("BuildingModels/Dolphine_csv.csv")
     degree = df['degree'].values
     closeness = df['closeness'].values
     betwennes = df['betwennes'].values
@@ -174,19 +174,59 @@ if __name__ == "__main__":
     t = Topsis(evaluation_matrix, weights, criterias)
 
     best = t.calc()
-    print(best)
+    for d,b, c, be in zip(degree, best,closeness,betwennes):
+        print(b, d, c, be)
     df.loc[:,'influence'] = 0
     for b in best:
         df.loc[b, 'influence'] = 1
+
+    print(t.best_similarity[55])
     #print(df.iloc[73, -1])
     # print(max(best))
 
-    # ranking = t.rank_to_best_similarity()
-    # df['influence'] = best
-    # print(df.head())
-    df.to_csv("Dolphine.csv")
+    # # ranking = t.rank_to_best_similarity()
+    # # df['influence'] = best
+    # # print(df.head())
+    # df.to_csv("Dolphine.csv")
 
-    print(t.best_similarity[36], t.best_similarity[36])
+    # print(t.best_similarity[36], t.best_similarity[36])
+
+    # import networkx as nx # type: ignore
+
+    # G = nx.Graph()
+    # G.add_node('a')
+    # G.add_node('b')
+    # G.add_node('c')
+
+    # G.add_edge('a','b')
+    # G.add_edge('b','c')
+
+    # degree = nx.degree_centrality(G)
+    # closeness = nx.closeness_centrality(G)
+    # betweenes = nx.betweenness_centrality(G)
+
+    # evaluation_matrix = np.array([0,0,0])
+    # for d, c, b in zip(degree.values(), closeness.values(), betweenes.values()):
+    #     included = [d, c, b]
+    #     included = np.array(included)
+    #     evaluation_matrix = np.vstack((evaluation_matrix, included))
+    # evaluation_matrix = evaluation_matrix[1:]
+    # weights = [1, 1, 1]
+
+    # '''
+    # if higher value is preferred - True
+    # if lower value is preferred - False
+    # '''
+    # criterias = np.array([True, True, True])
+
+    # t = Topsis(evaluation_matrix, weights, criterias)
+
+    # best = t.calc()
+    # print(best)
+
+
+
+
 
 
 
