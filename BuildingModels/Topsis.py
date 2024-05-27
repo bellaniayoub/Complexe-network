@@ -127,7 +127,7 @@ class Topsis():
                                       (self.worst_distance[i] + self.best_distance[i])
 
     def ranking(self, data):
-        return [i+1  for i in data.argsort()]
+        return [i  for i in data.argsort()]
 
     def rank_to_worst_similarity(self):
         # return rankdata(self.worst_similarity, method="min").astype(int)
@@ -149,46 +149,70 @@ class Topsis():
         self.step_5()
         # print("Step 5\n", self.worst_distance, self.best_distance, end="\n\n")
         self.step_6()
-        return self.rank_to_best_similarity()#[:int(len(self.rank_to_best_similarity())*0.1)]
+        print(min(self.rank_to_best_similarity()))
+        return self.rank_to_best_similarity()[:int(len(self.rank_to_best_similarity())*0.1)]
         # print("Step 6\n", self.worst_similarity,
         #       self.best_similarity, end="\n\n")
 if __name__ == "__main__":
-    df = pd.read_csv("BuildingModels/Dolphine_csv.csv")
-    degree = df['degree'].values
-    closeness = df['closeness'].values
-    betwennes = df['betwennes'].values
-    evaluation_matrix = np.array([0,0,0])
-    for d, c, b in zip(degree, closeness, betwennes):
-        included = [d, c, b]
-        included = np.array(included)
-        evaluation_matrix = np.vstack((evaluation_matrix, included))
-    evaluation_matrix = evaluation_matrix[1:]
-    weights = [1, 1, 1]
 
-    '''
-    if higher value is preferred - True
-    if lower value is preferred - False
-    '''
-    criterias = np.array([True, True, True])
+    # paths = ["BuildingModels/Data/Facebook.csv", "BuildingModels/Data/Dolphins.csv", "BuildingModels/Data/Karate.csv", "BuildingModels/Data/Football.csv"]
+    # for path in paths:
+    #     df = pd.read_csv(path)
+    #     # df = df.iloc[:, :]
 
-    t = Topsis(evaluation_matrix, weights, criterias)
+    #     node = df.iloc[:,0].values
+    #     degree = df['degree'].values
+    #     closeness = df['closeness'].values
+    #     betwennes = df['betwennes'].values
+    #     evaluation_matrix = np.array([0,0,0])
+    #     for d, c, b in zip(degree, closeness, betwennes):
+    #         included = [d, c, b]
+    #         included = np.array(included)
+    #         evaluation_matrix = np.vstack((evaluation_matrix, included))
+    #     evaluation_matrix = evaluation_matrix[1:]
+    #     weights = [1, 1, 1]
 
-    best = t.calc()
-    for d,b, c, be in zip(degree, best,closeness,betwennes):
-        print(b, d, c, be)
-    df.loc[:,'influence'] = 0
-    for b in best:
-        df.loc[b, 'influence'] = 1
+    #     # print(df.iloc[1, :])
+    #     '''
+    #     if higher value is preferred - True
+    #     if lower value is preferred - False
+    #     '''
+    #     criterias = np.array([True, True, True])
 
-    print(t.best_similarity[55])
+    #     t = Topsis(evaluation_matrix, weights, criterias)
+    #     # print(t.rank_to_best_similarity)
+    #     best = t.calc()
+    #     # print(best)
+    #     # print(b)
+    #     # for d,b, c, be in zip(degree, best,closeness,betwennes):
+    #     #     print(b, d, c, be)
+    #     # df.loc[:,'influence'] = 0
+    #     for b in best:
+    #         # print(b,node[b])
+    #         df.loc[df['Node']==node[b], 'influence'] = 1
+        
+
+    #     df.to_csv(path, index=False)
+    # print(df.iloc[:, :])
+
+    #print(t.best_similarity[55])
     #print(df.iloc[73, -1])
     # print(max(best))
 
     # # ranking = t.rank_to_best_similarity()
-    # # df['influence'] = best
+    #df['influence'] = best
     # # print(df.head())
-    # df.to_csv("Dolphine.csv")
+    # df.to_csv("BuildingModels/Data_t.csv", index=False)
+    df = pd.read_csv("BuildingModels/Data/Facebook.csv")
+    dft = pd.read_csv("BuildingModels/Data/Football.csv")
+    dfm = pd.read_csv("BuildingModels/Data/Dolphins.csv")
+    dfs = pd.read_csv("BuildingModels/Data/Karate.csv")
 
+
+    concat = pd.concat([df,dft,dfm, dfs], )
+    print(concat.head(), len(concat))
+
+    concat.to_csv("BuildingModels/Data/AllData.csv", index=False)
     # print(t.best_similarity[36], t.best_similarity[36])
 
     # import networkx as nx # type: ignore

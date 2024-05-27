@@ -5,7 +5,7 @@ from sklearn.metrics import accuracy_score
 
 class DecisionTreeModel:
     def __init__(self):
-        self.model = DecisionTreeClassifier()
+        self.model = DecisionTreeClassifier(max_depth=8)
 
     def train(self, X_train, y_train):
         self.model.fit(X_train, y_train)
@@ -31,10 +31,10 @@ if __name__ == "__main__":
     neural = DecisionTreeModel()
 
     #neural.compile_neural("sgd", 'binary_crossentropy', 'accuracy')
-    df = pd.read_csv("BuildingModels/Data_Facebook.csv")
-    df = df.drop("Unnamed: 0", axis=1)
+    df = pd.read_csv("BuildingModels/Data/Facebook.csv")
+    # df = df.drop("Unnamed: 0", axis=1)
 
-    X = df.iloc[:, :-1].values
+    X = df.iloc[:, 1:-1].values
     scaler = StandardScaler()
     X=scaler.fit_transform(X)
     y = df.iloc[:, -1].values
@@ -49,20 +49,46 @@ if __name__ == "__main__":
     m = confusion_matrix(y_pred, y_test)
     print(m)
     print("\n\n")
-    dft = pd.read_csv("BuildingModels/Dolphine.csv")
-    dft = dft.drop("Unnamed: 0", axis=1)
-    Xt = dft.iloc[:,:-1].values
-    Xt = scaler.fit_transform(Xt)
-    yt = dft.iloc[:,-1].values
-    y_pred = neural.predict(Xt)
-    m = confusion_matrix(y_pred, yt)
+    # dft = pd.read_csv("Dolphine.csv")
+    # # dft = dft.drop("Unnamed: 0", axis=1)
+    # Xt = dft.iloc[:,:-1].values
+    # Xt = scaler.fit_transform(Xt)
+    # yt = dft.iloc[:,-1].values
+    # y_pred = neural.predict(Xt)
+    # m = confusion_matrix(y_pred, yt)
+    # print(m)
+
+
+    df = pd.read_csv("BuildingModels/Data/Dolphins.csv")
+    # df = df.drop("Unnamed: 0", axis=1)
+
+    X = df.iloc[:, 1:-1].values
+    X=scaler.fit_transform(X)
+    y = df.iloc[:, -1].values
+    neural.evaluate(X, y)
+
+    y_pred = neural.predict(X)
+    #print(max(y_pred))
+    m = confusion_matrix(y_pred, y)
     print(m)
 
+    df = pd.read_csv("BuildingModels/Data/Karate.csv")
+    # df = df.drop("Unnamed: 0", axis=1)
 
-    df = pd.read_csv("BuildingModels/Data_Facebook.csv")
-    df = df.drop("Unnamed: 0", axis=1)
+    X = df.iloc[:, 1:-1].values
+    X=scaler.fit_transform(X)
+    y = df.iloc[:, -1].values
+    neural.evaluate(X, y)
 
-    X = df.iloc[:, :-1].values
+    y_pred = neural.predict(X)
+    #print(max(y_pred))
+    m = confusion_matrix(y_pred, y)
+    print(m)
+
+    df = pd.read_csv("BuildingModels/Data/Football.csv")
+    # df = df.drop("Unnamed: 0", axis=1)
+
+    X = df.iloc[:, 1:-1].values
     X=scaler.fit_transform(X)
     y = df.iloc[:, -1].values
     neural.evaluate(X, y)
