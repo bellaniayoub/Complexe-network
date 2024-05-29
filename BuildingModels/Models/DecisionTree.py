@@ -2,10 +2,11 @@ import pandas as pd
 from sklearn.discriminant_analysis import StandardScaler
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score
+import joblib
 
 class DecisionTreeModel:
     def __init__(self):
-        self.model = DecisionTreeClassifier(max_depth=8)
+        self.model = DecisionTreeClassifier(max_depth=1)
 
     def train(self, X_train, y_train):
         self.model.fit(X_train, y_train)
@@ -17,6 +18,8 @@ class DecisionTreeModel:
         y_pred = self.predict(X_test)
         accuracy = accuracy_score(y_test, y_pred)
         print("Accuracy:", accuracy)
+    def extract(self, path="DecisionTree.pkl"):
+        joblib.dump(self, path)
 
 
 if __name__ == "__main__":
@@ -31,7 +34,7 @@ if __name__ == "__main__":
     neural = DecisionTreeModel()
 
     #neural.compile_neural("sgd", 'binary_crossentropy', 'accuracy')
-    df = pd.read_csv("BuildingModels/Data/Facebook.csv")
+    df = pd.read_csv("BuildingModels/Data/AllData.csv")
     # df = df.drop("Unnamed: 0", axis=1)
 
     X = df.iloc[:, 1:-1].values
@@ -72,6 +75,21 @@ if __name__ == "__main__":
     m = confusion_matrix(y_pred, y)
     print(m)
 
+    print("Facebook")
+
+    df = pd.read_csv("BuildingModels/Data/GrQc.csv")
+    # df = df.drop("Unnamed: 0", axis=1)
+
+    X = df.iloc[:, 1:-1].values
+    X=scaler.fit_transform(X)
+    y = df.iloc[:, -1].values
+    neural.evaluate(X, y)
+
+    y_pred = neural.predict(X)
+    #print(max(y_pred))
+    m = confusion_matrix(y_pred, y)
+    print(m)
+
     df = pd.read_csv("BuildingModels/Data/Karate.csv")
     # df = df.drop("Unnamed: 0", axis=1)
 
@@ -97,7 +115,20 @@ if __name__ == "__main__":
     #print(max(y_pred))
     m = confusion_matrix(y_pred, y)
     print(m)
-    #neural.extract()
+
+    df = pd.read_csv("BuildingModels/Data/Science.csv")
+    # df = df.drop("Unnamed: 0", axis=1)
+
+    X = df.iloc[:, 1:-1].values
+    X=scaler.fit_transform(X)
+    y = df.iloc[:, -1].values
+    neural.evaluate(X, y)
+
+    y_pred = neural.predict(X)
+    #print(max(y_pred))
+    m = confusion_matrix(y_pred, y)
+    print(m)
+    neural.extract()
 
     # dft = pd.read_csv("BuildingModels/Dolphine.csv")
     # dft = dft.drop("Unnamed: 0", axis=1)

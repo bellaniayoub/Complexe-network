@@ -155,44 +155,44 @@ class Topsis():
         #       self.best_similarity, end="\n\n")
 if __name__ == "__main__":
 
-    # paths = ["BuildingModels/Data/Facebook.csv", "BuildingModels/Data/Dolphins.csv", "BuildingModels/Data/Karate.csv", "BuildingModels/Data/Football.csv"]
-    # for path in paths:
-    #     df = pd.read_csv(path)
-    #     # df = df.iloc[:, :]
+    paths = ["BuildingModels/Data/GrQc.csv"]
+    for path in paths:
+        df = pd.read_csv(path)
+        # df = df.iloc[:, :]
 
-    #     node = df.iloc[:,0].values
-    #     degree = df['degree'].values
-    #     closeness = df['closeness'].values
-    #     betwennes = df['betwennes'].values
-    #     evaluation_matrix = np.array([0,0,0])
-    #     for d, c, b in zip(degree, closeness, betwennes):
-    #         included = [d, c, b]
-    #         included = np.array(included)
-    #         evaluation_matrix = np.vstack((evaluation_matrix, included))
-    #     evaluation_matrix = evaluation_matrix[1:]
-    #     weights = [1, 1, 1]
+        node = df.iloc[:,0].values
+        degree = df['degree'].values
+        closeness = df['closeness'].values
+        betwennes = df['betwennes'].values
+        evaluation_matrix = np.array([0,0,0])
+        for d, c, b in zip(degree, closeness, betwennes):
+            included = [d, c, b]
+            included = np.array(included)
+            evaluation_matrix = np.vstack((evaluation_matrix, included))
+        evaluation_matrix = evaluation_matrix[1:]
+        weights = [1, 1, 1]
 
-    #     # print(df.iloc[1, :])
-    #     '''
-    #     if higher value is preferred - True
-    #     if lower value is preferred - False
-    #     '''
-    #     criterias = np.array([True, True, True])
+        # print(df.iloc[1, :])
+        '''
+        if higher value is preferred - True
+        if lower value is preferred - False
+        '''
+        criterias = np.array([True, True, True])
 
-    #     t = Topsis(evaluation_matrix, weights, criterias)
-    #     # print(t.rank_to_best_similarity)
-    #     best = t.calc()
-    #     # print(best)
-    #     # print(b)
-    #     # for d,b, c, be in zip(degree, best,closeness,betwennes):
-    #     #     print(b, d, c, be)
-    #     # df.loc[:,'influence'] = 0
-    #     for b in best:
-    #         # print(b,node[b])
-    #         df.loc[df['Node']==node[b], 'influence'] = 1
+        t = Topsis(evaluation_matrix, weights, criterias)
+        # print(t.rank_to_best_similarity)
+        best = t.calc()
+        # print(best)
+        # print(b)
+        # for d,b, c, be in zip(degree, best,closeness,betwennes):
+        #     print(b, d, c, be)
+        # df.loc[:,'influence'] = 0
+        for b in best:
+            # print(b,node[b])
+            df.loc[df['Node']==node[b], 'influence'] = 1
         
 
-    #     df.to_csv(path, index=False)
+        df.to_csv(path, index=False)
     # print(df.iloc[:, :])
 
     #print(t.best_similarity[55])
@@ -203,17 +203,17 @@ if __name__ == "__main__":
     #df['influence'] = best
     # # print(df.head())
     # df.to_csv("BuildingModels/Data_t.csv", index=False)
-    df = pd.read_csv("BuildingModels/Data/Facebook.csv")
-    dft = pd.read_csv("BuildingModels/Data/Football.csv")
-    dfm = pd.read_csv("BuildingModels/Data/Dolphins.csv")
-    dfs = pd.read_csv("BuildingModels/Data/Karate.csv")
+    # df = pd.read_csv("BuildingModels/Data/Science.csv")
+    # dft = pd.read_csv("BuildingModels/Data/Football.csv")
+    # dfm = pd.read_csv("BuildingModels/Data/Dolphins.csv")
+    # dfs = pd.read_csv("BuildingModels/Data/Karate.csv")
 
 
-    concat = pd.concat([df,dft,dfm, dfs], )
-    print(concat.head(), len(concat))
+    # concat = pd.concat([df, dft,dfm, dfs], )
+    # # print(concat.head(), len(concat))
 
-    concat.to_csv("BuildingModels/Data/AllData.csv", index=False)
-    # print(t.best_similarity[36], t.best_similarity[36])
+    # concat.to_csv("BuildingModels/Data/AllData.csv", index=False)
+    # # print(t.best_similarity[36], t.best_similarity[36])
 
     # import networkx as nx # type: ignore
 

@@ -3,13 +3,20 @@
 {% block title %}Home - Application Web{% endblock %}
 
 {% block content %}
-    <div class="dropdown-container">
-        <select id="dropdown" onchange="navigateToPage()">
-            <option value="">Choisissez un algorithme</option>
-            <option value="/neural_network/">Réseau neurone</option>
-            <option value="/linear_regression/">Regression linéaire</option>
-            <option value="/k_nearest_neighbors">K-ppv</option>
-            <option value="/decision_tree/l">Arbre de décision</option>
-        </select>
+    <div class="form-container">
+        <form method="post" id='Form' enctype="multipart/form-data">
+            <!-- the form to submit the file -->
+            {% csrf_token %}
+            <label for="file">Importer un fichier CSV :</label>
+            <input type="file" id="file" name="file" accept=".mtx">
+            <button type="submit">Traiter</button>
+            <select id="dropdown" name="model">
+                <option value="">Choisissez un algorithme</option>
+                <option value="neural_network" >Réseau neurone</option>
+                <option value="regression_linear">Regression linéaire</option>
+                <option value="k-ppv">K-ppv</option>
+                <option value="arbre_decision">Arbre de décision</option>
+            </select>
+        </form>
     </div>
 {% endblock %}

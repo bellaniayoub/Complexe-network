@@ -2,6 +2,7 @@
 {% block content %}
 <h2>Arbre de décision</h2>
 <form method="post" enctype="multipart/form-data">
+    <!-- the form to submit put the file -->
     {% csrf_token %}
     <label for="file">Importer un fichier CSV :</label>
     <input type="file" id="file" name="file" accept=".csv">

@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% if nodes and prediction %}
+    <h3>Résultat :</h3>
+    <p>{{ prediction }}</p>
+    <a href="{% url 'generate_neural_network_pdf' %}">Télécharger le résultat au format PDF</a>
+{% endif %}

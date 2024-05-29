@@ -1,14 +1,13 @@
-function navigateToPage() {
-    const dropdown = document.getElementById('dropdown');
-    const selectedPage = dropdown.value;
-    if (selectedPage) {
-        window.location.href = selectedPage;
+document.getElementById("Form").addEventListener("submit", function(event) {
+    var selectedValue = document.getElementById("dropdown").value;
+    if (selectedValue !== "") {
+        // Prevent default form submission
+        event.preventDefault();
+        
+        // Update the form action based on the selected value
+        this.action = "/showResult/";
+        
+        // Submit the form programmatically
+        this.submit();
     }
-}
-function navigateToPage() {
-    var dropdown = document.getElementById('dropdown');
-    var selectedOption = dropdown.value;
-    if (selectedOption) {
-        window.location.href = selectedOption;
-    }
-}
+});

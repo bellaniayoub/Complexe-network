@@ -2,6 +2,7 @@ from sklearn.discriminant_analysis import StandardScaler
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
+import joblib
 import pandas as pd
 
 class KNNClassifier:
@@ -14,12 +15,14 @@ class KNNClassifier:
 
     def predict(self, X_test):
         return self.model.predict(X_test)
+    def extract(self):
+        joblib.dump(self.model, "KNN.joblib")
 
 # Example usage:
 if __name__ == "__main__":
 
     # Example dataset
-    df = pd.read_csv("BuildingModels/Data/Facebook.csv")
+    df = pd.read_csv("BuildingModels/Data/AllData.csv")
     X = df.iloc[:, 1:-1].values
     scaler = StandardScaler()
     X=scaler.fit_transform(X)
@@ -28,14 +31,14 @@ if __name__ == "__main__":
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=1/3, random_state=42)
     # Initialize and fit KNN classifier
-    knn_classifier = KNNClassifier(k=63)
+    knn_classifier = KNNClassifier(k=3)
     knn_classifier.fit(X_train, y_train)
 
     # Example test data
 
     # Make predictions
     predictions = knn_classifier.predict(X_test)
-    print("Predictions:", predictions)
+    # print("Predictions:", predictions)
 
     m = confusion_matrix(predictions, y_test)
     print(m)
@@ -46,9 +49,44 @@ if __name__ == "__main__":
     yt = dft.iloc[:,-1].values
     
     predictions = knn_classifier.predict(Xt)
-    print("Predictions:", predictions)
+    # print("Predictions:", predictions)
 
 
     m = confusion_matrix(predictions, yt)
     print(m)
+    dft = pd.read_csv("BuildingModels/Data/Karate.csv")
+    Xt = dft.iloc[:,1:-1].values
+    Xt = scaler.fit_transform(Xt)
+    yt = dft.iloc[:,-1].values
+    
+    predictions = knn_classifier.predict(Xt)
+    # print("Predictions:", predictions)
+
+
+    m = confusion_matrix(predictions, yt)
+    print(m)
+    dft = pd.read_csv("BuildingModels/Data/Science.csv")
+    Xt = dft.iloc[:,1:-1].values
+    Xt = scaler.fit_transform(Xt)
+    yt = dft.iloc[:,-1].values
+    
+    predictions = knn_classifier.predict(Xt)
+    # print("Predictions:", predictions)
+
+
+    m = confusion_matrix(predictions, yt)
+    print(m)
+    dft = pd.read_csv("BuildingModels/Data/GrQc.csv")
+    Xt = dft.iloc[:,1:-1].values
+    Xt = scaler.fit_transform(Xt)
+    yt = dft.iloc[:,-1].values
+    
+    predictions = knn_classifier.predict(Xt)
+    # print("Predictions:", predictions)
+
+
+    m = confusion_matrix(predictions, yt)
+    print(m)
+
+    knn_classifier.extract()
 
