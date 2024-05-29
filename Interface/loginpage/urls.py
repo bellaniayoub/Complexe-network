@@ -21,8 +21,6 @@ urlpatterns = [
     #path('admin/', admin.site.urls),
     #path('base', views.base, name='base'),
     path('', views.home, name='home'),
-    path('neural_network/', views.neural_network, name='neural_network'),
-    path('linear_regression/', views.linear_regression, name='linear_regression'),
-    path('k_nearest_neighbors/', views.k_nearest_neighbors, name='k_nearest_neighbors'),
-    path('decision_tree/', views.decision_tree, name='decision_tree'),
+    path("showResult/", views.traiter, name='showResult/')
+
 ]
