@@ -2,16 +2,14 @@ import pandas as pd
 from sklearn.discriminant_analysis import StandardScaler
 import tensorflow as tf
 
+@tf.keras.utils.register_keras_serializable()
 class NeuralNetwork(tf.keras.Model):
-    @tf.keras.utils.register_keras_serializable()
-    class NeuralNetwork(tf.keras.Model):
-        pass
 
     def __init__(self, input_size=3 , hidden_size=8, output_size=1):
         super(NeuralNetwork, self).__init__()
-        self.input_size = input_size,
-        self.hidden_size = hidden_size,
-        self.output_size = hidden_size,
+        self.input_size = input_size
+        self.hidden_size = hidden_size
+        self.output_size = output_size
         self.input_layer = tf.keras.layers.Input(shape=(input_size,))
         self.hidden_layer1 = tf.keras.layers.Dense(hidden_size, activation='relu')
         self.hidden_layer2 = tf.keras.layers.Dense(int(hidden_size/2), activation='sigmoid')
@@ -68,8 +66,8 @@ class NeuralNetwork(tf.keras.Model):
 
     @classmethod
     def from_config(cls, config):
-        config.pop('trainable', None)
-        config.pop('dtype')
+        # config.pop('trainable', None)
+        # config.pop('dtype')
         return cls(**config)
 
 

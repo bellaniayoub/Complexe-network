@@ -1,6 +1,17 @@
 {% extends "base.html" %}
-{% if nodes and prediction %}
+
+{% block content %}
     <h3>Résultat :</h3>
-    <p>{{ prediction }}</p>
-    <a href="{% url 'generate_neural_network_pdf' %}">Télécharger le résultat au format PDF</a>
-{% endif %}
+    <ul style="
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;">
+        {% for element in prediction %}
+            <li>{{ element }}</li>
+        {% endfor %}
+        <br>
+        {%for node in nodes %}
+            <li>{{node}}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

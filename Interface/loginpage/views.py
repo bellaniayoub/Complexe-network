@@ -1,4 +1,3 @@
-import os
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 import joblib
@@ -8,9 +7,11 @@ from django.shortcuts import render
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 # from tensorflow.keras.models import load_model # type: ignore
+from sklearn.discriminant_analysis import StandardScaler
 import tensorflow as tf
 import networkx as nx
 from .Models.NeuralNetwrok import NeuralNetwork
+from .Models.DecisionTree import DecisionTreeModel
 
 # from django.conf import settings
 # from django.templatetags.static import static
@@ -31,36 +32,38 @@ def getData(data):
     """Calculate the nodes"""
     nodes = graph.nodes()
     """Transform the data into a numpy array"""
-    Data = np.array([degree.values(),closenness.values(), betweenness.values()])
-
-    return nodes ,Data
-
-
-
-
-
-
-
+    Data = pd.DataFrame({"Node":[],"Degree":[],"Closeness":[],"betwennes":[]})
+    for n, d, c, b in zip(nodes,list(degree.values()),list(closenness.values()),list(betweenness.values())):
+        included = [n,d,c,b]
+        Data.loc[len(Data)] = included
+    
+    return Data
 
 def predict(data, model_name):
-    nodes, data = getData(data)
-    print(os.getcwd())
+    data = getData(data)
+    nodes = data.iloc[:, 0]
+    X = data.iloc[:,1:].values
+    scaler = StandardScaler()
+    X=scaler.fit_transform(X)
     """ Loading the model """
     if model_name == "neural_network":
-        model_path = "neural.h5"
+        model_path = "C:/Users/bella/Desktop/PFE/neural.keras"
         with tf.keras.utils.custom_object_scope({'NeuralNetwork': NeuralNetwork}):
             model = tf.keras.models.load_model(model_path)
 
     if model_name == "arbre_decision":
-        model = joblib.load("DecisionTree.pkl")
+        model = joblib.load("C:/Users/bella/Desktop/PFE/DecisionTree.joblib")
     if model_name == "k-ppv":
-        model = joblib.load("../static/Models/KNN.joblib")
+        model = joblib.load("C:/Users/bella/Desktop/PFE/Interface/static/Models/KNN.joblib")
     if model_name == "regression_linear":
         """After definning the model"""
-        pass
+        model = joblib.load("C:/Users/bella/Desktop/PFE/Interface/static/Models/Linear_regression.h5")
     
     
-    prediction = model.predict(data)
+    if model_name!='neural_network':
+        prediction = model.predict(X)
+    else:
+        prediction = model.predicting(X)
 
     return nodes , prediction
 
@@ -86,5 +89,4 @@ def traiter(request):
         }
         # return generate_neural_network_pdf(result)
     return render(request, 'showResult.html', context)
-
 

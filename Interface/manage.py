@@ -19,4 +19,6 @@ def main():
 
 
 if __name__ == '__main__':
+    from loginpage.Models.NeuralNetwrok import NeuralNetwork
+    from loginpage.Models.DecisionTree import DecisionTreeModel
     main()
