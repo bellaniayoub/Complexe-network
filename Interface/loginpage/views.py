@@ -12,6 +12,7 @@ import tensorflow as tf
 import networkx as nx
 from .Models.NeuralNetwrok import NeuralNetwork
 from .Models.DecisionTree import DecisionTreeModel
+from django.contrib.staticfiles.finders import find
 
 # from django.conf import settings
 # from django.templatetags.static import static
@@ -47,17 +48,20 @@ def predict(data, model_name):
     X=scaler.fit_transform(X)
     """ Loading the model """
     if model_name == "neural_network":
-        model_path = "C:/Users/bella/Desktop/PFE/neural.keras"
+        model_path = find("Models/neural.keras")
         with tf.keras.utils.custom_object_scope({'NeuralNetwork': NeuralNetwork}):
             model = tf.keras.models.load_model(model_path)
 
     if model_name == "arbre_decision":
-        model = joblib.load("C:/Users/bella/Desktop/PFE/DecisionTree.joblib")
+        path = find("Models/DecisionTree.joblib")
+        model = joblib.load(path)
     if model_name == "k-ppv":
-        model = joblib.load("C:/Users/bella/Desktop/PFE/Interface/static/Models/KNN.joblib")
+        path = find("Models/KNN.joblib")
+        model = joblib.load(path)
     if model_name == "regression_linear":
         """After definning the model"""
-        model = joblib.load("C:/Users/bella/Desktop/PFE/Interface/static/Models/Linear_regression.h5")
+        path = find("Models/Linear_regression.h5")
+        model = joblib.load(path)
     
     
     if model_name!='neural_network':
