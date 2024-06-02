@@ -80,7 +80,7 @@ def generate_neural_network_pdf(result):
 def traiter(request):
     if request.method == 'POST' and request.FILES['file']:
         csv_file = request.FILES['file']
-        data = pd.read_csv(csv_file, names=["source", "target"], sep=' ')
+        data = pd.read_csv(csv_file, names=["source", "target"], sep=' ', usecols=[0,1])
 
         nodes, result = predict(data, request.POST['model'])
         context = {

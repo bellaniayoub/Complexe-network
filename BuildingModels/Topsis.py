@@ -155,7 +155,7 @@ class Topsis():
         #       self.best_similarity, end="\n\n")
 if __name__ == "__main__":
 
-    paths = ["BuildingModels/Data/GrQc.csv"]
+    paths = ["BuildingModels/Data/Power.csv"]
     for path in paths:
         df = pd.read_csv(path)
         # df = df.iloc[:, :]
