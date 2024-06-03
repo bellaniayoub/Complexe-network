@@ -13,6 +13,7 @@ import networkx as nx
 from .Models.NeuralNetwrok import NeuralNetwork
 from .Models.DecisionTree import DecisionTreeModel
 from django.contrib.staticfiles.finders import find
+import matplotlib.pyplot as plt
 
 # from django.conf import settings
 # from django.templatetags.static import static
@@ -20,6 +21,48 @@ def base(request):
     return render(request,'base.html')
 def home(request):
     return render(request,'new.html')
+
+def DrawGraph(data, node_list):
+    """Get the Graph from the input data"""
+    G = nx.from_pandas_edgelist(data)
+    # Calculate node degrees
+    degrees = dict(G.degree())
+
+    # Calculate edge weights
+    edge_weights = {(u, v): 1 / (1 + G.degree(u) + G.degree(v)) for u, v in G.edges()}
+
+    # Set node colors based on degree and node list
+    node_colors = []
+    for node in G.nodes():
+        if node in node_list:
+            node_colors.append('red')  # Nodes in the list are red
+        else:
+            node_colors.append('skyblue')  # Other nodes are blue
+
+    # Set edge colors based on weight
+    edge_colors = [edge_weights[(u, v)] for u, v in G.edges()]
+
+    # Draw the graph
+    fig, ax = plt.subplots(figsize=(20, 20))
+    nx.draw(G, pos=nx.spring_layout(G, k=0.15, iterations=50), node_color=node_colors, edge_color=edge_colors, node_size=[v*5 for v in degrees.values()], with_labels=False, ax=ax)
+
+    # Set colorbar for node degrees
+    sm = plt.cm.ScalarMappable(cmap='Blues', norm=plt.Normalize(vmin=min(degrees.values()), vmax=max(degrees.values())))
+    sm.set_array([])
+    cbar = fig.colorbar(sm, ax=ax)
+    cbar.set_label('Node Degree', rotation=270, labelpad=20)
+
+    # Set colorbar for edge weights
+    sm = plt.cm.ScalarMappable(cmap='Reds', norm=plt.Normalize(vmin=min(edge_weights.values()), vmax=max(edge_weights.values())))
+    sm.set_array([])
+    cbar = fig.colorbar(sm, ax=ax)
+    cbar.set_label('Edge Weight', rotation=270, labelpad=20)
+    # Save the figure to a file
+    plt.savefig("image.png", bbox_inches='tight')
+
+    # Close the figure to free up memory
+    plt.close(fig)
+
 
 def getData(data):
 
@@ -32,6 +75,8 @@ def getData(data):
 
     """Calculate the nodes"""
     nodes = graph.nodes()
+    """Drawing the graph"""
+    # DrawGraph(graph)
     """Transform the data into a numpy array"""
     Data = pd.DataFrame({"Node":[],"Degree":[],"Closeness":[],"betwennes":[]})
     for n, d, c, b in zip(nodes,list(degree.values()),list(closenness.values()),list(betweenness.values())):
@@ -41,7 +86,6 @@ def getData(data):
     return Data
 
 def predict(data, model_name):
-    data = getData(data)
     nodes = data.iloc[:, 0]
     X = data.iloc[:,1:].values
     scaler = StandardScaler()
@@ -68,8 +112,8 @@ def predict(data, model_name):
         prediction = model.predict(X)
     else:
         prediction = model.predicting(X)
-
-    return nodes , prediction
+    predict = [n for n, p in zip(nodes,prediction) if p==1]
+    return predict
 
 def generate_neural_network_pdf(result):
     response = HttpResponse(content_type='application/pdf')
@@ -85,10 +129,10 @@ def traiter(request):
     if request.method == 'POST' and request.FILES['file']:
         csv_file = request.FILES['file']
         data = pd.read_csv(csv_file, names=["source", "target"], sep=' ', usecols=[0,1])
-
-        nodes, result = predict(data, request.POST['model'])
+        traitement_data = getData(data)
+        result = predict(traitement_data, request.POST['model'])
+        DrawGraph(data, result)
         context = {
-            "nodes":nodes,
             "prediction":result
         }
         # return generate_neural_network_pdf(result)

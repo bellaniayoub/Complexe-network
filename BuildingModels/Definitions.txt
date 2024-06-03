@@ -1,0 +1,10 @@
+TOPSIS (Technique for Order Preference by Similarity to Ideal Solution) est une méthode dont le but est de pouvoir
+classer par ordre de choix un certain nombre d'alternatives sur la base d'un ensemble de critères favorables ou
+défavorables. Cette méthode s'inscrit dans les techniques utilisées dans le domaine d'aide à la décision multicritères
+(MCDM = Multiple Criteria Decision Making). Elle a été développée par Hwang et Yoon en 1981.
+Son principe consiste à déterminer pour chaque alternative un coefficient compris entre 0 et 1 sur la base des distances
+(euclidiennes) entre chaque alternative d'une part et les solutions idéales favorable et défavorable. Nous allons voir ci-dessous en détail les étapes à suivre pas à pas.
+Une alternative est dite idéale favorable si elle est la plus loin de la pire alternative et la plus proche de la meilleure
+alternative.
+Une alternative est dite idéale défavorable si elle est la plus proche de la pire alternative et la plus loin de la meilleure
+alternative

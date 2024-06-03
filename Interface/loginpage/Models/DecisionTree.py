@@ -90,6 +90,20 @@ if __name__ == "__main__":
     m = confusion_matrix(y_pred, y)
     print(m)
 
+    print("Power")
+    df = pd.read_csv("BuildingModels/Data/Power.csv")
+    # df = df.drop("Unnamed: 0", axis=1)
+
+    X = df.iloc[:, 1:-1].values
+    X=scaler.fit_transform(X)
+    y = df.iloc[:, -1].values
+    neural.evaluate(X, y)
+
+    y_pred = neural.predict(X)
+    #print(max(y_pred))
+    m = confusion_matrix(y_pred, y)
+    print(m)
+
     df = pd.read_csv("BuildingModels/Data/Karate.csv")
     # df = df.drop("Unnamed: 0", axis=1)
 

@@ -31,8 +31,18 @@ if __name__ == "__main__":
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=1/3, random_state=42)
     # Initialize and fit KNN classifier
-    knn_classifier = KNNClassifier(k=3)
-    knn_classifier.fit(X_train, y_train)
+    knn_classifier = joblib.load("KNN.joblib")
+    knn_classifier.fit(X_train,y_train)
+    dft = pd.read_csv("BuildingModels/Data/Facebook.csv")
+    Xt = dft.iloc[:,1:-1].values
+    Xt = scaler.fit_transform(Xt)
+    yt = dft.iloc[:,-1].values
+    predictions = knn_classifier.predict(Xt)
+    # print("Predictions:", predictions)
+
+
+    m = confusion_matrix(predictions, yt)
+    print(m)
 
     # Example test data
 
@@ -65,11 +75,12 @@ if __name__ == "__main__":
 
     m = confusion_matrix(predictions, yt)
     print(m)
-    dft = pd.read_csv("BuildingModels/Data/Science.csv")
+    dft = pd.read_csv("BuildingModels/Data/Facebook.csv")
     Xt = dft.iloc[:,1:-1].values
     Xt = scaler.fit_transform(Xt)
     yt = dft.iloc[:,-1].values
-    
+    X_train, X_test, y_train, y_test = train_test_split(Xt, yt)
+    knn_classifier.fit(X_train, y_train)
     predictions = knn_classifier.predict(Xt)
     # print("Predictions:", predictions)
 

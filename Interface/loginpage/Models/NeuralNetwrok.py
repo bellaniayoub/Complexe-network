@@ -82,7 +82,7 @@ if __name__ == "__main__":
     #     print("Error importing imblearn:", e)
     #neural = NeuralNetwork(3,1,1)
 
-    neural = NeuralNetwork(3,8,1)
+    neural = NeuralNetwork(3,16,1)
     opt = tf.keras.optimizers.Adam(learning_rate = 0.001)
     loss = "binary_crossentropy"
     accuracy = "accuracy"
@@ -149,6 +149,19 @@ if __name__ == "__main__":
 
     print("Footaball:")
     dft = pd.read_csv("BuildingModels/Data/Football.csv")
+    Xt = dft.iloc[:,1:-1].values
+    Xt = scaler.fit_transform(Xt)
+    print(max(Xt[0]), max(Xt[1]), max(Xt[2]))
+    yt = dft.iloc[:,-1].values
+    neural.evaluat(Xt,yt)
+    y_pred = neural.predicting(Xt)
+
+    # print(y_pred)
+    m = confusion_matrix(y_pred, yt)
+    print(m)
+    
+    print("Power")
+    dft = pd.read_csv("BuildingModels/Data/Power.csv")
     Xt = dft.iloc[:,1:-1].values
     Xt = scaler.fit_transform(Xt)
     print(max(Xt[0]), max(Xt[1]), max(Xt[2]))
