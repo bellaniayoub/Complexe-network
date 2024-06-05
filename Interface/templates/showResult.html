@@ -2,16 +2,18 @@
 
 {% block content %}
     <h3>Résultat :</h3>
-    <ul style="
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;">
+    <div class="tiles-container">
         {% for element in prediction %}
-            <li>{{ element }}</li>
+            <div class="tile">
+                <span class="value">{{ element }}</span>
+                <span class="label">X Graphe</span>
+            </div>
         {% endfor %}
-        <br>
-        {%for node in nodes %}
-            <li>{{node}}</li>
+        {% for node in nodes %}
+            <div class="tile">
+                <span class="value">{{ node }}</span>
+                <span class="label">Graphe</span>
+            </div>
         {% endfor %}
-    </ul>
+    </div>
 {% endblock %}
