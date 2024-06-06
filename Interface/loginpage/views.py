@@ -193,7 +193,7 @@ def traiter(request):
         context = {
             "nodes":nodes,
             "links":links,
-            "prediction":result
+            "prediction":json.dumps(result)
         }
         print("i'm here")
         # return generate_neural_network_pdf(result)

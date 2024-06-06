@@ -48,7 +48,8 @@ nav {
 
 /* Main Content Styles */
 main {
-    max-width: 800px;
+    /* max-width: 800px; */
+    width: 100%;
     margin: 40px auto;
     padding: 20px;
     background-color: #fff;
@@ -69,6 +70,10 @@ footer {
     text-decoration: none;
 }
 
+ul{
+    list-style-type: none;
+}
+
 /* Responsive Styles */
 @media (max-width: 768px) {
     .nav-links {
@@ -79,3 +84,4 @@ footer {
         display: block;
     }
 }
+

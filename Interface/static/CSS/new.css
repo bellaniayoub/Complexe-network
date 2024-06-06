@@ -106,3 +106,7 @@ footer {
 a:hover{
     color:aqua;
 }
+
+ul{
+    list-style-type: none;
+}

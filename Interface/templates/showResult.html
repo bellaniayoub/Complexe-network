@@ -4,7 +4,7 @@
     <h3>Résultat :</h3>
     <ul style="display: flex; flex-direction: row; flex-wrap: wrap;">
         {% for element in prediction %}
-            <li>{{ element }}</li>
+            <li>{{element}}</li>
         {% endfor %}
         <br>
     </ul>
@@ -13,10 +13,15 @@
     <script>
         const nodes = JSON.parse('{{ nodes|safe }}');
         const links = JSON.parse('{{ links|safe }}');
+        const prediction = JSON.parse('{{prediction|safe}}')
 
+        ids = []
+        for(let i=0;i<prediction.length;i++){
+            ids.push(prediction[i].id)
+        }
         // Specify the dimensions of the chart.
-        const width = 1000;
-        const height = 600;
+        const width = 2000;
+        const height = 2000;
 
         // Specify the color scale.
         const color = d3.scaleOrdinal(d3.schemeCategory10);
@@ -24,7 +29,7 @@
         // Create a simulation with several forces.
         const simulation = d3.forceSimulation(nodes)
             .force("link", d3.forceLink(links).id(d => d.id))
-            .force("charge", d3.forceManyBody())
+            .force("charge", d3.forceManyBody(10))
             .force("center", d3.forceCenter(width / 2, height / 2))
             .on("tick", ticked);
 
@@ -42,7 +47,7 @@
             .selectAll()
             .data(links)
             .join("line")
-            .attr("stroke-width", d => Math.sqrt(d.value));
+            .attr("stroke-width", d => (Math.sqrt(d.value)));
 
         const node = svg.append("g")
             .attr("stroke", "#fff")
@@ -50,8 +55,10 @@
             .selectAll()
             .data(nodes)
             .join("circle")
-            .attr("r", 5)
-            .attr("fill", d => color(d.group));
+            .attr("r", d=>(2,5))
+            .attr("fill", d =>{
+                return (ids.includes(d.id)) ? "red": "blue";
+            });
 
         node.append("title")
             .text(d => d.id);

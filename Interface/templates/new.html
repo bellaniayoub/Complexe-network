@@ -8,7 +8,7 @@
             <!-- the form to submit the file -->
             {% csrf_token %}
             <label for="file">Importer un fichier CSV :</label>
-            <input type="file" id="file" name="file" accept=".mtx">
+            <input type="file" id="file" name="file" accept=".mtx, .edges, .gml">
             <button type="submit">Traiter</button>
             <select id="dropdown" name="model">
                 <option value="">Choisissez un algorithme</option>
