@@ -87,6 +87,7 @@ main {
 .file-input {
     display: none; /* Masquer le champ de fichier par défaut */
     width: 500px;
+    cursor: none;
 }
 .custom-file-label, .dropdown, .submit-button {
     width: 500px; /* Largeur des boutons */
@@ -111,13 +112,13 @@ main {
     color: #333;
 }
 .submit-button {
-    background-color: #00bfff; /* Bleu ciel pour le bouton */
+    background-color: #00f2ff; /* Bleu ciel pour le bouton */
     color: #fff;
     cursor: pointer;
 }
 
 .submit-button:hover {
-    background-color: #009acd; /* Bleu ciel foncé pour le bouton au survol */}
+    background-color: #00f2ff; /* Bleu ciel foncé pour le bouton au survol */}
 
 
 
@@ -203,4 +204,23 @@ footer {
     .hamburger {
         display: block;
     }
+}
+
+
+
+
+
+#download-pdf {
+    background-color: #00bfff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+#download-pdf:hover {
+    background-color: #009acd;
 }
