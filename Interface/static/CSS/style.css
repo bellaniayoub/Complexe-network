@@ -3,13 +3,14 @@ body {
     font-family: 'Open Sans', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f5f5f5;
+    background-color: #ffffff;
     color: #333;
 }
 
 /* Header Styles */
 header {
-    background-color: #fff;
+    background-color: #000;
+    color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     position: sticky;
     top: 0;
@@ -23,12 +24,26 @@ nav {
     padding: 10px 20px;
 }
 
+.logo {
+    display: flex;
+    align-items: center;
+}
+
 .logo img {
     max-height: 40px;
 }
 
+.logo-text {
+    font-size: 1.5em;
+    margin-left: 10px;
+}
+
+.blue-text {
+    color: #00bfff;
+}
+
 .nav-links a {
-    color: #333;
+    color: #fff;
     text-decoration: none;
     margin-left: 20px;
 }
@@ -42,7 +57,7 @@ nav {
     display: block;
     width: 25px;
     height: 3px;
-    background-color: #333;
+    background-color: #fff;
     margin-bottom: 5px;
 }
 
@@ -56,12 +71,100 @@ main {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* Results Container Styles */
+.form-container {
+    margin: 40px auto;
+    padding: 20px;
+    max-width: 800px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-row {
+    width: 500px;
+    margin-bottom: 20px; /* Espace entre les lignes du formulaire */
+}
+.file-input {
+    display: none; /* Masquer le champ de fichier par défaut */
+    width: 500px;
+    cursor: none;
+}
+.custom-file-label, .dropdown, .submit-button {
+    width: 500px; /* Largeur des boutons */
+    padding: 10px;
+    font-size: 1em;
+    text-align: center;
+    border: 1px solid #ddd; /* Ajouter une bordure */
+    border-radius: 5px;
+}
+.custom-file-label {
+    display: block;
+    background-color: #fff; /* Arrière-plan blanc */
+    color: #000; /* Écriture noire */
+    cursor: pointer;
+    width: 480px;
+}
+.custom-file-label:hover {
+    background-color: #f0f0f0; /* Couleur de fond au survol */
+}
+.dropdown {
+    background-color: #fff; /* Arrière-plan blanc */
+    color: #333;
+}
+.submit-button {
+    background-color: #00f2ff; /* Bleu ciel pour le bouton */
+    color: #fff;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    background-color: #00f2ff; /* Bleu ciel foncé pour le bouton au survol */}
+
+
+
+
+
+/* Grid Layout for Results */
+.results-grid, .nodes-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* Individual Result Card */
+.result-card, .node-card {
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #fff;
+    width: calc(33.333% - 20px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .result-card, .node-card {
+        width: calc(50% - 20px);
+    }
+}
+
+@media (max-width: 480px) {
+    .result-card, .node-card {
+        width: 100%;
+    }
+}
+
 /* Footer Styles */
 footer {
     background-color: #333;
     color: #fff;
     padding: 20px;
     text-align: center;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    border-top: 1px solid #ddd;
 }
 
 .footer-links a {
@@ -70,10 +173,29 @@ footer {
     text-decoration: none;
 }
 
-ul{
-    list-style-type: none;
+.tiles-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Répartir les tuiles de manière égale */
 }
 
+.tile {
+    width: calc(33.33% - 10px); /* Répartir sur trois colonnes avec un espace entre */
+    margin-bottom: 20px; /* Espacement entre les tuiles */
+    background-color: #f9f9f9; /* Couleur de fond */
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.value {
+    font-size: 1.2em; /* Taille de la police pour la valeur */
+}
+
+.label {
+    font-size: 0.8em; /* Taille de la police pour l'étiquette */
+    color: #00bfff; /* Bleu ciel pour l'étiquette */
+}
 /* Responsive Styles */
 @media (max-width: 768px) {
     .nav-links {
@@ -85,3 +207,21 @@ ul{
     }
 }
 
+
+
+
+
+#download-pdf {
+    background-color: #00bfff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+#download-pdf:hover {
+    background-color: #009acd;
+}

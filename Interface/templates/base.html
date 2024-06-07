@@ -5,33 +5,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Application Web{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'CSS/new.css' %}">
-    <!-- <script src="https://d3js.org/d3.v6.min.js"></script> -->
+    <link rel="stylesheet" href="{% static 'CSS/style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- <div class="overlay"></div> -->
-    <video autoplay muted loop id="background-video">
-        <source src="{% static 'FILE/Data Science Free Background Video.mp4' %}" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
     <header>
-        <div class="head">
-            <img src="logo.png" alt="Logo" width="50" height="50">
-            <h1>My Website</h1>
-        </div>
         <nav>
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About Us</a></li>
-            </ul>
+            <div class="logo">
+                <img src="{% static 'IMAGES/logo.png' %}" alt="Logo">
+                <span class="logo-text"><span class="blue-text">X</span> Graphe </span>
+            </div>
+            <div class="nav-links">
+                <a href="#">Home</a>
+                <a href="#">About</a>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </nav>
     </header>
 
     <main>
         {% block content %}
-        <!-- Content specific to each page will go here -->
         {% endblock %}
     </main>
+
     <footer>
         <div class="footer-links">
             <a href="#">Contact</a>
@@ -40,6 +42,7 @@
         </div>
         <p>&copy; 2023 My Website. All rights reserved.</p>
     </footer>
+
     <script src="{% static 'SCRIPT/new.js' %}"></script>
 </body>
 </html>

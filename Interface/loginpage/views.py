@@ -198,4 +198,3 @@ def traiter(request):
         print("i'm here")
         # return generate_neural_network_pdf(result)
     return render(request, 'showResult.html', context)
-

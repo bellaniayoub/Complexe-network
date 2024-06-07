@@ -1,3 +1,4 @@
+// Code existant pour la soumission du formulaire
 document.getElementById("Form").addEventListener("submit", function(event) {
     var selectedValue = document.getElementById("dropdown").value;
     if (selectedValue !== "") {
