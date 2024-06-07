@@ -20,8 +20,8 @@
             ids.push(prediction[i].id)
         }
         // Specify the dimensions of the chart.
-        const width = 2000;
-        const height = 2000;
+        const width = nodes.length*5;
+        const height = nodes.length*15;
 
         // Specify the color scale.
         const color = d3.scaleOrdinal(d3.schemeCategory10);
