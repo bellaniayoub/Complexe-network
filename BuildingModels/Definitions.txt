@@ -6,5 +6,13 @@ Son principe consiste à déterminer pour chaque alternative un coefficient comp
 (euclidiennes) entre chaque alternative d'une part et les solutions idéales favorable et défavorable. Nous allons voir ci-dessous en détail les étapes à suivre pas à pas.
 Une alternative est dite idéale favorable si elle est la plus loin de la pire alternative et la plus proche de la meilleure
 alternative.
-Une alternative est dite idéale défavorable si elle est la plus proche de la pire alternative et la plus loin de la meilleure
-alternative
+Une alternative est dite idéale défavorable si elle est la plus proche de la pire alternative et la plus loin de la meilleure alternative
+
+
+
+
+IDEA:  par exemple, une entreprise qui veut changer le choix d'une communauté dans un réseau social vers son produit peut détecter les profils influents dans cette communauté et les convaincre d'utiliser ce produit par les donner une promotion ou même les payer pour une publication, comme ça l'entreprise vas augmenter son taux d'achat dans cette communauté.
+
+
+
+ref: https://portail.lyc-la-martiniere-diderot.ac-lyon.fr/srv20/co/A3_Reseau_Complexe.html	RESEAU DES RESEAUX

@@ -13,30 +13,71 @@
 <button id="download-pdf">Télécharger tous les nœuds influents en PDF</button>
 <div id="network-container"></div>
 <script src="https://d3js.org/d3.v6.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
+    // Function to calculate the required width
+
+
+// Function to calculate the required width
+function calculateWidth(maxValue, minValue) {
+  const width = maxValue - minValue + 2000; // Add some padding
+  const padding = maxValue*2
+  return width +padding;
+}
+
+// Function to calculate the required height
+function calculateHeight(maxValue, minValue) {
+  const height = maxValue - minValue+ 500; // Add some padding
+  const padding = maxValue*2
+  return height + padding;
+}
+
+// Calculate the required width and height
+
     const nodes = JSON.parse('{{ nodes|safe }}');
     const links = JSON.parse('{{ links|safe }}');
     const prediction = JSON.parse('{{prediction|safe}}')
     div = document.getElementById("tiles-container")
+// Calculate the maximum and minimum node IDs
+const maxNodeId = Math.max(...nodes.map(node => node.id));
+const minNodeId = Math.min(...nodes.map(node => node.id));
+
+
+
+// Calculate the maximum and minimum link source and target IDs
+const maxLinkId = Math.max(...links.flatMap(link => [link.source, link.target]));
+const minLinkId = Math.min(...links.flatMap(link => [link.source, link.target]));
     
+const requiredWidth = calculateWidth(Math.max(maxNodeId, maxLinkId), Math.min(minNodeId, minLinkId));
+const requiredHeight = calculateHeight(Math.max(maxNodeId, maxLinkId), Math.min(minNodeId, minLinkId));
 
     ids = []
+    let affich_length = 0;
+    if(prediction.length>10){
+        affich_length = 10;
+    }
+    else{
+        affich_length = prediction.length;}
     for(let i=0;i<prediction.length;i++){
+        ids.push(prediction[i].id)
+    }
+    for(let i=0;i<affich_length;i++){
         var tile  = document.createElement('div')
         tile.classList.add("tile")
         tile.innerHTML = 
             '<span class="value">'+ prediction[i].id+'</span>'
         div.appendChild(tile);
-        ids.push(prediction[i].id)
     }
-    if(prediction.length>10){
+    if(affich_length==10){
         var message = document.createElement('p')
         message.innerHTML = 'Affichage limité aux 10 premiers nœuds influents. Cliquez ci-dessous pour télécharger tous les nœuds.'
         div.appendChild(message)
     }
     // Specify the dimensions of the chart.
-    const width = 2000;
-    const height = 2000;
+    const width = requiredWidth;
+    const height = requiredHeight;
+    console.log(width, height)
 
     // Specify the color scale.
     const color = d3.scaleOrdinal(d3.schemeCategory10);
@@ -122,36 +163,77 @@
     d3.select("#network-container")
         .node()
         .appendChild(svg.node());
+
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 <script>
-    // Function to generate PDF
-    function generatePDF() {
-        // Get the HTML element to convert to PDF
-        var element = document.body;
-
-        // Use html2canvas to convert the HTML element to a canvas
-        html2canvas(element).then(function(canvas) {
-            // Create a new jsPDF instance
-            var doc = new jsPDF();
-
-            // Calculate the PDF height based on the content height and width
-            var width = doc.internal.pageSize.getWidth();
-            var height = doc.internal.pageSize.getHeight();
-            var ratio = height / canvas.height;
-            var newHeight = canvas.height * ratio;
-
-            // Add the canvas to the PDF
-            doc.addImage(canvas, 0, 0, width, newHeight);
-
-            // Save the PDF
-            doc.save("generated-pdf.pdf");
-        });
+    document.getElementById('download-pdf').addEventListener('click', function() {
+    const elementsJson = "{{ prediction|safe|escapejs }}";
+    const elements = JSON.parse(elementsJson);
+    ids = []
+    for(let i=0;i<prediction.length;i++){
+        ids.push(prediction[i].id)
     }
 
-    // Add event listener to the button
-    document.getElementById("download-pdf").addEventListener("click", generatePDF);
+const { jsPDF } = window.jspdf;
+const doc = new jsPDF();
+
+// Add logo and header text
+const img = new Image();
+img.src = "{% static 'IMAGES/logo.png' %}";
+img.onload = function() {
+    doc.addImage(img, 'PNG', 10, 10, 30, 30);
+    doc.setFontSize(16);
+    doc.text("X Graphe", 50, 25);
+
+    // Add introductory text
+    doc.setFontSize(12);
+    doc.text("Liste des nœuds influents :", 10, 50);
+
+    // Add nodes to the PDF
+    let y = 60;
+    ids.forEach(element => {
+        doc.text("Node"+element, 10, y);
+        y += 10;
+        if (y > 280) {
+            doc.addPage();
+            y = 10;
+            doc.addImage(img, 'PNG', 10, 10, 30, 30);
+            doc.text("X Graphe", 50, 25);
+            doc.text("Liste des nœuds influents (suite) :", 10, 50);
+        }
+    });
+
+    // Add the graph title
+    doc.addPage();
+    doc.addImage(img, 'PNG', 10, 10, 30, 30);
+    doc.text("X Graphe", 50, 25);
+    doc.text("Graphe des nœuds :", 10, 50);
+
+    // Add SVG graph to the PDF
+    // ... (existing code for adding the SVG graph)
+    const svgElement = document.querySelector('#network-container svg');
+            const svgData = new XMLSerializer().serializeToString(svgElement);
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+            const url = URL.createObjectURL(svgBlob);
+            const graphImg = new Image();
+            graphImg.src = url;
+
+            graphImg.onload = function() {
+                canvas.width = graphImg.width;
+                canvas.height = graphImg.height;
+                ctx.drawImage(graphImg, 0, 0);
+                URL.revokeObjectURL(url);
+                const imgData = canvas.toDataURL('image/png');
+                doc.addImage(imgData, 'PNG', 10, 60, width / 4, height / 4);
+                //doc.save('influential_nodes.pdf');
+                }
+    doc.save('influential_nodes.pdf');
+};
+})
 </script>
 
 {% endblock %}
