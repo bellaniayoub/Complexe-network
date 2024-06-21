@@ -14,5 +14,9 @@ Une alternative est dite idéale défavorable si elle est la plus proche de la p
 IDEA:  par exemple, une entreprise qui veut changer le choix d'une communauté dans un réseau social vers son produit peut détecter les profils influents dans cette communauté et les convaincre d'utiliser ce produit par les donner une promotion ou même les payer pour une publication, comme ça l'entreprise vas augmenter son taux d'achat dans cette communauté.
 
 
+Tensorflow: Tensorflow est une open-source framework créé par Google en 2015 pour l'apprentissage automatique, surtouts l'apprentissage profond, il offre plusieurs API avec différentes niveaux d'abstraction, pour un taux élevé d'abstraction, il est favorable d'utiliser Keras qui offre des objets et méthodes prédéfinie pour l'entrainement des models sur les donnes. Il existe une version lite de tensorflow appelé tensorflow lite, il est utilise pour le développement des modèles pour les mobiles annoncée en 2017.
+
+
+Scikit-learn: Scikit learn est une bibliotheque libre destine a l'apprentissage automatique, il offre des algorithme et des méthodes pour la preprocessing de donnees et d'entrainer les modeles et les tester d'apprentissage, un des avantages du scikit learn est la syntaxe et la methode d'utilisation est commune pour tous les modeles comme indiquer dans la figure alors l'echange des algorithmes d'apprentissage est tres simple, de plus il travaille sur des types predefinie en python comme les matrice numpy, et les dataframes pandas 
 
 ref: https://portail.lyc-la-martiniere-diderot.ac-lyon.fr/srv20/co/A3_Reseau_Complexe.html	RESEAU DES RESEAUX

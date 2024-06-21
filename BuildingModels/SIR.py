@@ -1,6 +1,8 @@
 from matplotlib import pyplot as plt
 import pandas as pd
+from sklearn.metrics import accuracy_score
 from sklearn.discriminant_analysis import StandardScaler
+from sklearn.tree import DecisionTreeClassifier
 import tensorflow as tf
 import networkx as nx
 import random
@@ -101,6 +103,24 @@ class NeuralNetwork(tf.keras.Model):
         # config.pop('dtype')
         return cls(**config)
 
+class DecisionTreeModel:
+    def __init__(self):
+        self.model = DecisionTreeClassifier(max_depth=1)
+
+    def train(self, X_train, y_train):
+        self.model.fit(X_train, y_train)
+
+    def predict(self, X_test):
+        return self.model.predict(X_test)
+
+    def evaluate(self, X_test, y_test):
+        y_pred = self.predict(X_test)
+        accuracy = accuracy_score(y_test, y_pred)
+        print("Accuracy:", accuracy)
+    def extract(self, path="DecisionTree.pkl"):
+        joblib.dump(self, path)
+
+
 def sir_model(G, beta, gamma, initial_infected, max_steps=100):
     """
     Implements the SIR model for the spread of influence in a complex network.
@@ -148,18 +168,19 @@ def sir_model(G, beta, gamma, initial_infected, max_steps=100):
     return time_series
 if __name__=="__main__":
     # Create a NetworkX graph
-    file = "BuildingModels/facebook_combined.txt"
+    file = "BuildingModels/power-1138-bus.mtx"
     df = pd.read_csv(file, sep=' ', names=["source", "target"], usecols=[0,1])
     G = nx.from_pandas_edgelist(df, "source", "target")
     # Set the infection rate and recovery rate
     beta = 0.5
     gamma = 0.3
-    data = pd.read_csv("BuildingModels/Data/Facebook.csv")
-    model = tf.keras.models.load_model("C:/Users/bella/Desktop/PFE/Interface/static/Models/neural.keras")
+    data = pd.read_csv("BuildingModels/Data/Power.csv")
+    # model = tf.keras.models.load_model("C:/Users/bella/Desktop/PFE/Interface/static/Models/neural.keras")
+    model = joblib.load("C:/Users/bella/Desktop/PFE/Interface/static/Models/DecisionTree.joblib")
     X = data.iloc[:,1:-1].values
     sclare = StandardScaler()
     X = sclare.fit_transform(X)
-    y_pred = model.predicting(X)
+    y_pred = model.predict(X)
     nodes = data["Node"].values
     n_pred = []
     for n, y in zip(nodes, y_pred):
