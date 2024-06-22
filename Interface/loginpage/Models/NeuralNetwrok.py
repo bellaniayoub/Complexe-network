@@ -38,9 +38,6 @@ class NeuralNetwork(tf.keras.Model):
         return hist
     def showProgress(self, history):
 
-
-        # history = model.fit(X_train, y_train, epochs=20, batch_size=32, validation_split=0.2)
-
         # Plot training & validation accuracy values
         plt.figure(figsize=(12, 4))
 
@@ -75,7 +72,6 @@ class NeuralNetwork(tf.keras.Model):
             predict data and calssify it
         """
         y = self.predict(X)
-        print(max(y), min(y))
         y = [1 if i>0.5 else 0 for i in y]
         return y
     
@@ -85,6 +81,8 @@ class NeuralNetwork(tf.keras.Model):
             print(f"Model saved successfully to {path}")
         except Exception as e:
             print(f"Error occurred while saving the model: {e}")
+
+    """Fonction pour extract and load the model"""
     def get_config(self):
         return {
             'input_size': self.input_size,

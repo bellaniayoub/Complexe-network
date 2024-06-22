@@ -1,3 +1,4 @@
+from sklearn.metrics import accuracy_score
 from sklearn.discriminant_analysis import StandardScaler
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split
@@ -15,6 +16,10 @@ class KNNClassifier:
 
     def predict(self, X_test):
         return self.model.predict(X_test)
+    def evaluate(self, X_test, y_test):
+        y_pred = self.predict(X_test)
+        accuracy = accuracy_score(y_test, y_pred)
+        print("Accuracy:", accuracy)
     def extract(self):
         joblib.dump(self.model, "KNN.joblib")
 
@@ -31,16 +36,18 @@ if __name__ == "__main__":
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=1/3, random_state=42)
     # Initialize and fit KNN classifier
-    knn_classifier = joblib.load("KNN.joblib")
+    # knn_classifier = joblib.load("KNN.joblib")
+    knn_classifier = KNNClassifier(17)
+
     knn_classifier.fit(X_train,y_train)
-    dft = pd.read_csv("BuildingModels/Data/Facebook.csv")
+    dft = pd.read_csv("BuildingModels/Data/AllData.csv")
     Xt = dft.iloc[:,1:-1].values
     Xt = scaler.fit_transform(Xt)
     yt = dft.iloc[:,-1].values
     predictions = knn_classifier.predict(Xt)
     # print("Predictions:", predictions)
 
-
+    knn_classifier.evaluate(Xt,yt)
     m = confusion_matrix(predictions, yt)
     print(m)
 
@@ -49,7 +56,7 @@ if __name__ == "__main__":
     # Make predictions
     predictions = knn_classifier.predict(X_test)
     # print("Predictions:", predictions)
-
+    knn_classifier.evaluate(Xt,yt)
     m = confusion_matrix(predictions, y_test)
     print(m)
 
@@ -61,7 +68,7 @@ if __name__ == "__main__":
     predictions = knn_classifier.predict(Xt)
     # print("Predictions:", predictions)
 
-
+    knn_classifier.evaluate(Xt,yt)
     m = confusion_matrix(predictions, yt)
     print(m)
     dft = pd.read_csv("BuildingModels/Data/Karate.csv")
@@ -72,19 +79,19 @@ if __name__ == "__main__":
     predictions = knn_classifier.predict(Xt)
     # print("Predictions:", predictions)
 
-
+    knn_classifier.evaluate(Xt,yt)
     m = confusion_matrix(predictions, yt)
     print(m)
     dft = pd.read_csv("BuildingModels/Data/Facebook.csv")
     Xt = dft.iloc[:,1:-1].values
     Xt = scaler.fit_transform(Xt)
     yt = dft.iloc[:,-1].values
-    X_train, X_test, y_train, y_test = train_test_split(Xt, yt)
-    knn_classifier.fit(X_train, y_train)
+    # X_train, X_test, y_train, y_test = train_test_split(Xt, yt)
+    # knn_classifier.fit(X_train, y_train)
     predictions = knn_classifier.predict(Xt)
     # print("Predictions:", predictions)
 
-
+    knn_classifier.evaluate(Xt,yt)
     m = confusion_matrix(predictions, yt)
     print(m)
     dft = pd.read_csv("BuildingModels/Data/GrQc.csv")
@@ -95,7 +102,7 @@ if __name__ == "__main__":
     predictions = knn_classifier.predict(Xt)
     # print("Predictions:", predictions)
 
-
+    knn_classifier.evaluate(Xt,yt)
     m = confusion_matrix(predictions, yt)
     print(m)
 

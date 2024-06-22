@@ -6,7 +6,7 @@ import joblib
 
 class DecisionTreeModel:
     def __init__(self):
-        self.model = DecisionTreeClassifier(max_depth=1)
+        self.model = DecisionTreeClassifier(max_depth=2)
 
     def train(self, X_train, y_train):
         self.model.fit(X_train, y_train)
@@ -18,6 +18,7 @@ class DecisionTreeModel:
         y_pred = self.predict(X_test)
         accuracy = accuracy_score(y_test, y_pred)
         print("Accuracy:", accuracy)
+        
     def extract(self, path="DecisionTree.pkl"):
         joblib.dump(self, path)
 
